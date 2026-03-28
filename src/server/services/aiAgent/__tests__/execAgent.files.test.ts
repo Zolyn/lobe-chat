@@ -93,6 +93,9 @@ vi.mock('@/server/services/klavis', () => ({
 
 vi.mock('@/server/services/file', () => ({
   FileService: vi.fn().mockImplementation(() => ({
+    getFullFileUrl: vi
+      .fn()
+      .mockImplementation((key: string) => Promise.resolve(`https://s3.example.com/${key}`)),
     uploadFromUrl: mockUploadFromUrl,
   })),
 }));
@@ -103,6 +106,13 @@ vi.mock('@/server/modules/Mecha', () => ({
     getEnabledPluginManifests: vi.fn().mockReturnValue(new Map()),
   }),
   serverMessagesEngine: vi.fn().mockResolvedValue([{ content: 'test', role: 'user' }]),
+}));
+
+vi.mock('@/server/services/toolExecution/deviceProxy', () => ({
+  deviceProxy: {
+    isConfigured: false,
+    queryDeviceList: vi.fn().mockResolvedValue([]),
+  },
 }));
 
 vi.mock('model-bank', async (importOriginal) => {
@@ -205,7 +215,7 @@ describe('AiAgentService.execAgent - file upload handling', () => {
         {
           alt: 'screenshot.jpg',
           id: 'file-img',
-          url: 'https://app.lobehub.com/f/file-img',
+          url: 'https://s3.example.com/files/test-user-id/xxx/screenshot.jpg',
         },
       ]);
     });

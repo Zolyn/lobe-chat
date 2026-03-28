@@ -1,4 +1,4 @@
-import type { RuntimeStepContext, StepContextTodos } from '@lobechat/types';
+import type { RuntimeStepContext, StepActivatedSkill, StepContextTodos } from '@lobechat/types';
 
 /**
  * Input parameters for computeStepContext
@@ -6,7 +6,11 @@ import type { RuntimeStepContext, StepContextTodos } from '@lobechat/types';
  */
 export interface ComputeStepContextParams {
   /**
-   * Activated tool identifiers accumulated from lobe-tools messages
+   * Activated skills accumulated from activateSkill messages
+   */
+  activatedSkills?: StepActivatedSkill[];
+  /**
+   * Activated tool identifiers accumulated from lobe-activator messages
    */
   activatedToolIds?: string[];
   /**
@@ -30,10 +34,12 @@ export interface ComputeStepContextParams {
  * @returns RuntimeStepContext assembled from the provided values
  */
 export const computeStepContext = ({
+  activatedSkills,
   activatedToolIds,
   todos,
 }: ComputeStepContextParams): RuntimeStepContext => {
   return {
+    ...(activatedSkills?.length && { activatedSkills }),
     ...(activatedToolIds?.length && { activatedToolIds }),
     ...(todos && { todos }),
   };
