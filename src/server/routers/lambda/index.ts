@@ -15,12 +15,14 @@ import { agentDocumentRouter } from './agentDocument';
 import { agentEvalRouter } from './agentEval';
 import { agentEvalExternalRouter } from './agentEvalExternal';
 import { agentGroupRouter } from './agentGroup';
+import { agentNotifyRouter } from './agentNotify';
 import { agentSkillsRouter } from './agentSkills';
 import { aiAgentRouter } from './aiAgent';
 import { aiChatRouter } from './aiChat';
 import { aiModelRouter } from './aiModel';
 import { aiProviderRouter } from './aiProvider';
 import { apiKeyRouter } from './apiKey';
+import { botMessageRouter } from './botMessage';
 import { briefRouter } from './brief';
 import { chunkRouter } from './chunk';
 import { comfyuiRouter } from './comfyui';
@@ -62,6 +64,8 @@ import { videoRouter } from './video';
 export const lambdaRouter = router({
   agent: agentRouter,
   agentBotProvider: agentBotProviderRouter,
+  agentNotify: agentNotifyRouter,
+  botMessage: botMessageRouter,
   agentCronJob: agentCronJobRouter,
   agentDocument: agentDocumentRouter,
   agentEval: agentEvalRouter,
